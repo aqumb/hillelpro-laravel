@@ -16,3 +16,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('deliverycalculator', 'DeliveryController@index');
+Route::get('exchange', 'TestController@index');
+Route::get('context', 'ContextController@index');
+Route::get('sergeyhomeWorkSolid', 'SergeyHomeWorkSolidController@index');
+Route::get('homeWorkSolid', 'HomeWorkSolidController@index');
