@@ -2,26 +2,34 @@
 
 namespace App\Context;
 
-abstract class Strategy implements StrategyInterface {
+abstract class Strategy implements StrategyInterface
+{
+    private $fileData;
 
-    abstract protected function formatProperty(string $name, $value): string;
-    abstract protected function format(array $object): string;
-    public function formatObject(array $object): string
+    abstract protected function formatProperty($name, $value);
+    public function setfileName()
     {
-        $formattedObject = [];
-
-        foreach ($object as $property => $value) {
-            $formattedObject[] = $this->formatProperty($property, $value);
-        }
-
-        return implode("\n", $formattedObject) . "\n________";
+        $strategyName = class_basename(get_class($this));
+        return $strategyName . '_' . date('Y-m-d') . '.txt';
     }
 
-    public function formatResult(array $result, string $strategyName): array
+    public function ObjectData($object)
+    {
+        $formattedObject = '';
+
+        foreach ($object as $name => $value) {
+            $formattedObject = $formattedObject . $this->formatProperty($name, $value);
+        }
+        $formattedObject = $formattedObject . "_______" . "<br>" ;
+
+        $this->fileData = $this->fileData . $formattedObject;
+        return $this;
+    }
+
+    public function formatResult()
     {
         return [
-            'name' => $strategyName . '_' . date('Y-m-d') . '.txt',
-            'text' => implode("\n", $result),
-        ];
+            'name' => $this->setFileName(),
+            'text' => $this->fileData];
     }
 }

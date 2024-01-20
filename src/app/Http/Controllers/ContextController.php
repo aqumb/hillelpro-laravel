@@ -46,15 +46,8 @@ class ContextController extends Controller
         ];
 
         $context = new Context($objects);
-
-        $firstStrategy = new FirstStrategy();
-        $resultFirstStrategy = $context->formatData($firstStrategy);
-
-        $secondStrategy = new SecondStrategy();
-        $resultSecondStrategy = $context->formatData($secondStrategy);
-
         echo '<pre>';
-        var_dump($firstStrategyResult = $firstStrategy->formatResult($resultFirstStrategy, 'FirstStrategy'));
-        var_dump($secondStrategyResult = $secondStrategy->formatResult($resultSecondStrategy, 'SecondStrategy'));
+        var_dump($context->Strategy(new FirstStrategy())->formatData());
+        var_dump($context->Strategy(new SecondStrategy())->formatData());
     }
 }

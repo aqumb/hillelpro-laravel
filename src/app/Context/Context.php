@@ -5,20 +5,26 @@ namespace App\Context;
 class Context
 {
     private $objects;
-    public function __construct(array $objects)
+    private $strategy;
+
+    public function __construct($objects)
     {
         $this->objects = $objects;
+        return $this;
     }
 
-    public function formatData(Strategy $strategy): array
+    public function Strategy($strategy)
     {
-        $formattedData = [];
+        $this->strategy = $strategy;
+        return $this;
+    }
 
+    public function formatData()
+    {
         foreach ($this->objects as $object) {
-            $formattedData[] = $strategy->formatObject((array)$object);
+            $this->strategy->ObjectData($object);
         }
-
-        return $formattedData;
+        return $this->strategy->formatResult();
     }
 }
 
