@@ -3,19 +3,14 @@
 namespace App\GameSolid;
 use GuzzleHttp\Client as GuzzleClient;
 
-class ParseApi
+class ParseApi implements ParseApiInterface
 {
-    private $url;
+    private string $url = 'https://nominatim.openstreetmap.org/search.php?format=jsonv2&q=';
 
-    public function __construct($url)
-    {
-        $this->url = $url;
-    }
-
-    public function parse($search, $excludePlaceIds) : mixed
+    public function searchPlaces(string $query, array $excludePlaceIds): array
     {
         $guzzleClient = new GuzzleClient();
-        $response = $guzzleClient->request('GET', $this->url . urlencode($search) . $excludePlaceIds);
+        $response = $guzzleClient->request('GET', $this->url . urlencode($query) . '&exclude_place_ids=' . urlencode(implode(',', $excludePlaceIds)));
         return json_decode($response->getBody()->getContents());
     }
 }
