@@ -6,6 +6,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogCommentController;
+use App\Http\Controllers\UrlController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,9 +19,9 @@ use App\Http\Controllers\BlogCommentController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+//Route::get('/', function () {
+//    return view('welcome');
+//});
 
 Route::get('deliverycalculator', 'DeliveryController@index');
 Route::get('exchange', 'TestController@index');
@@ -35,3 +36,8 @@ Route::get('/blog/deleteComment/{commentId}', [BlogCommentController::class, 'de
 Route::get('/blog', [BlogController::class, 'getBlog']);
 Route::get('/blog/{categoryId}', [BlogCategoryController::class, 'getCategories']);
 Route::get('/blog/{categoryId}/{postId}', [BlogPostController::class, 'getPosts']);
+
+
+Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
+Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten');
+Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');

@@ -26,6 +26,8 @@ use App\Models\Interface\PostRepositoryInterface;
 use App\Models\Repository\OrmPostRepository;
 use App\Models\Interface\CommentRepositoryInterface;
 use App\Models\Repository\OrmCommentRepository;
+use App\Models\Repository\OrmUrlRepository;
+use App\Models\Interface\UrlRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -44,6 +46,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(PostRepositoryInterface::class, OrmPostRepository::class);
         $this->app->bind(CommentRepositoryInterface::class, OrmCommentRepository::class);
 
+        $this->app->bind(UrlRepositoryInterface::class, OrmUrlRepository::class);
 //        $this->app->bind(CategoryRepositoryInterface::class, QBCategoryRepository::class);
 //        $this->app->bind(PostRepositoryInterface::class, QBPostRepository::class);
 //        $this->app->bind(CommentRepositoryInterface::class, QBCommentRepository::class);
