@@ -10,9 +10,12 @@ class OrmUrlRepository implements UrlRepositoryInterface
     {
         return Url::all();
     }
-    public function create(array $data)
+    public function create(string $originalUrl, string $shortUrl)
     {
-        return Url::create($data);
+        return Url::create([
+            'original_url' => $originalUrl,
+            'short_url' => $shortUrl,
+        ]);
     }
 
     public function findByShortUrl(string $shortUrl)

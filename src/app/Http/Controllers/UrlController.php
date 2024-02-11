@@ -2,20 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Url;
 use Illuminate\Http\Request;
 use App\Models\Interface\UrlRepositoryInterface;
+use App\UrlGenerator\UrlService;
+
 class UrlController extends Controller
 {
+    private $urlService;
     private $urlRepository;
-    public function __construct(UrlRepositoryInterface $urlRepository)
+    public function __construct(UrlService $urlService, UrlRepositoryInterface $urlRepository)
     {
+        $this->urlService = $urlService;
         $this->urlRepository = $urlRepository;
     }
 
     public function allUrl()
     {
-        $urls = $this->urlRepository->all();
+        $urls = $this->urlService->getAllUrls();
 
         return view('index', ['urls' => $urls]);
     }
@@ -28,12 +31,7 @@ class UrlController extends Controller
             ]);
 
             $originalUrl = $request->input('url');
-            $shortUrl = $this->generateShortUrl(8);
-
-            $this->urlRepository->create([
-                'original_url' => $originalUrl,
-                'short_url' => $shortUrl,
-            ]);
+            $shortUrl = $this->urlService->shortenUrl($originalUrl);
 
             return view('show', ['originalUrl' => $originalUrl, 'shortUrl' => route('redirectToOriginalUrl', $shortUrl)]);
         } catch (\Exception $e) {
@@ -49,10 +47,5 @@ class UrlController extends Controller
         } catch (\Exception $e) {
             return response()->view('errors.404', [], 404);
         }
-    }
-
-    private function generateShortUrl($len): string
-    {
-        return substr(preg_replace('/[+=]+/', '',  base64_encode(md5(time()))), $len * (-1));
     }
 }
