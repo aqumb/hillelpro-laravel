@@ -3,7 +3,13 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\CategoryFactory;
+use Database\Factories\CommentFactory;
+use Database\Factories\PostFactory;
 use Illuminate\Database\Seeder;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Comment;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,10 +25,12 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        $this->call([
-            CategoriesTableSeeder::class,
-            PostsTableSeeder::class,
-            CommentsTableSeeder::class,
-        ]);
+        Category::factory()->count(10)->create();
+        Category::all()->each(function ($category) {
+            Post::factory()->count(20)->create(['category_id' => $category->id]);
+        });
+        Post::all()->each(function ($post) {
+            Comment::factory()->count(25)->create(['post_id' => $post->id]);
+        });
     }
 }
