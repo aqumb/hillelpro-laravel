@@ -7,6 +7,7 @@ use App\Http\Controllers\BlogCategoryController;
 use App\Http\Controllers\BlogPostController;
 use App\Http\Controllers\BlogCommentController;
 use App\Http\Controllers\UrlController;
+use App\Http\Middleware\ValidateUrl;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +42,10 @@ Route::get('/blog/{categoryId}/{postId}', [BlogPostController::class, 'getPosts'
 //Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
 //Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten');
 //Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
+
+Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
+Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten')->middleware('web', 'App\Http\Middleware\ValidateUrl');
+Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
 
 
 Route::get('/blogWithComments', [BlogController::class, 'getBlogWithComments']);
