@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Illuminate\Support\Facades\Validator;
 
 class ValidateUrl
 {
@@ -11,9 +12,13 @@ class ValidateUrl
         if ($request->is('shorten')) {
             $inputKey = 'url';
 
-            $request->validate([
+            $validator = Validator::make($request->all(), [
                 $inputKey => 'required|string',
             ]);
+
+            if ($validator->fails()) {
+                throw new \Exception('Validation Error');
+            }
         }
 
         return $next($request);
