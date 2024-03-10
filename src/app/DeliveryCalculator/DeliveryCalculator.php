@@ -5,30 +5,35 @@ class DeliveryCalculator {
     private $price;
     private $method;
 
-    public function setPrice($price) : void
+    public function setPrice(int $price) : void
     {
         $this->price = $price;
     }
 
-    public function getPrice() : mixed
+    public function getPrice() : int
     {
         return $this->price;
     }
 
-    public function setMethod($method) : void
+    public function setMethod(string $method):void
     {
         $this->method = $method;
     }
 
-    public function getMethod() : mixed
+    public function getMethod() : string
     {
         return $this->method;
     }
 
-    public function calculatePrice($weight, $length, $width, $height, $sellerPrice = null) : array
+    public function calculatePrice($weight, $length, $width, $height, $sellerPrice = null) : float
     {
         $weightPrice = $weight * 50;
         $volumeWeightPrice = (($length * $width * $height) / 1000) * 50;
+
+        $sellerPrice = null;
+        if (property_exists($this, 'sellerPrice') && $this->sellerPrice !== null) {
+            $sellerPrice = $this->sellerPrice;
+        }
 
         if ($weightPrice >= $volumeWeightPrice && $weightPrice >= $sellerPrice) {
             $this->setPrice($weightPrice);
@@ -41,9 +46,7 @@ class DeliveryCalculator {
             $this->setMethod('Seller Price');
         }
 
-        return ['price' => $this->getPrice(), 'method' => $this->getMethod()];
+        return $this->getPrice();
     }
-
-
 }
 

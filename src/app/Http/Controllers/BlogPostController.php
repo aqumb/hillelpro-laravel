@@ -16,6 +16,12 @@ class BlogPostController extends Controller
         $this->commentRepository = $commentRepository;
     }
 
+    public function addCommentAndUpdateTimestamps(Request $request, $postId, $commentText) {
+        $this->postRepository->addCommentAndUpdateTimestamps($postId, $commentText);
+
+        return response()->json(['status' => 'success', 'message' => 'Comment added and timestamps updated successfully']);
+    }
+
     public function getPosts($categoryId, $postId) {
         $post = $this->postRepository->getPostById($postId);
 

@@ -21,25 +21,11 @@ class SearchService
         $this->placesFilter = $placesFilter;
     }
 
-    public function searchAndProcessLocations($request)
+    public function searchAndProcessLocations($search, $lat, $lon, array $excludePlaceIds = []): array
     {
-        $search = 'Продукти Одеса';
-        $lat = 46.4774700;
-        $lon = 30.7326200;
-        $excludePlaceIds = [];
-
-        while (true) {
-            $places = $this->locationSearch->searchPlaces($search, $excludePlaceIds);
-            $this->distanceCalculator->calculateDistances($places, $lat, $lon);
-            $this->placesSorter->sortByDistance($places);
-            $places = $this->placesFilter->filterAndTransform($places);
-
-            if ($excludePlaceIds) {
-                dd($places);
-            }
-
-            $excludePlaceIds = array_keys($places);
-            dump($places);
-        }
+        $places = $this->locationSearch->searchPlaces($search, $excludePlaceIds);
+        $this->distanceCalculator->calculateDistances($places, $lat, $lon);
+        $this->placesSorter->sortByDistance($places);
+        return $this->placesFilter->filterAndTransform($places);
     }
 }

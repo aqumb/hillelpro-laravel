@@ -17,6 +17,13 @@ class HomeWorkSolidController extends Controller
 
     public function index(Request $request)
     {
-        $this->SearchService->searchAndProcessLocations($request);
+        $search = 'Продукти Одеса';
+        $lat = 46.4774700;
+        $lon = 30.7326200;
+        $excludePlaceIds = [];
+
+        $places = $this->SearchService->searchAndProcessLocations($search, $lat, $lon, $excludePlaceIds);
+
+        dd($places);
     }
 }

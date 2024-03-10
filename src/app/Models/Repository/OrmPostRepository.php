@@ -4,6 +4,7 @@ namespace App\Models\Repository;
 
 use App\Models\Interface\PostRepositoryInterface;
 use App\Models\Post;
+use App\Models\Comment;
 
 class OrmPostRepository implements PostRepositoryInterface
 {
@@ -17,5 +18,19 @@ class OrmPostRepository implements PostRepositoryInterface
 
     public function updatePost($postId, array $data) {
         Post::where('id', $postId)->update($data);
+    }
+
+    public function addCommentAndUpdateTimestamps($postId, $commentText) {
+        return \DB::transaction(function () use ($postId, $commentText) {
+            $post = Post::find($postId);
+            $post->comments()->create(['content' => $commentText]);
+
+            $post->touch();
+            if ($post->category) {
+                $post->category->touch();
+            }
+
+            return true;
+        });
     }
 }

@@ -33,6 +33,7 @@ Route::get('homeWorkSolid', 'HomeWorkSolidController@index');
 Route::get('/blog/addCategory/{categoryName}', [BlogCategoryController::class, 'addCategory']);
 Route::get('/blog/updatePost/{postId}/{title}/{content}', [BlogPostController::class, 'updatePost']);
 Route::get('/blog/deleteComment/{commentId}', [BlogCommentController::class, 'deleteComment']);
+Route::get('/blog/addCommentAndUpdateTimestamps/{postId}/{commentText}', [BlogPostController::class, 'addCommentAndUpdateTimestamps']);
 
 Route::get('/blog', [BlogController::class, 'getBlog']);
 Route::get('/blog/{categoryId}', [BlogCategoryController::class, 'getCategories']);
@@ -43,9 +44,9 @@ Route::get('/blog/{categoryId}/{postId}', [BlogPostController::class, 'getPosts'
 //Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten');
 //Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
 
-Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
-Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten')->middleware('web', 'App\Http\Middleware\ValidateUrl');
-Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
+//Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
+//Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten')->middleware('web', 'App\Http\Middleware\ValidateUrl');
+//Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
 
 
 Route::get('/blogWithComments', [BlogController::class, 'getBlogWithComments']);

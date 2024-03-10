@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Post extends Model
 {
-    protected $fillable = ['title', 'content', 'category_id', 'created_id', 'updated_at'];
-    use HasFactory;
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
