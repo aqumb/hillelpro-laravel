@@ -33,4 +33,9 @@ class OrmPostRepository implements PostRepositoryInterface
             return true;
         });
     }
+
+    public function getLatestCommentsForPost($postId, $limit = 5) {
+        return Comment::where('post_id', $postId)->orderBy('created_at', 'desc')->limit($limit)->get();
+    }
+
 }

@@ -38,6 +38,7 @@ Route::get('/blog/addCommentAndUpdateTimestamps/{postId}/{commentText}', [BlogPo
 Route::get('/blog', [BlogController::class, 'getBlog']);
 Route::get('/blog/{categoryId}', [BlogCategoryController::class, 'getCategories']);
 Route::get('/blog/{categoryId}/{postId}', [BlogPostController::class, 'getPosts']);
+Route::get('/blog/posts/{postId}', [BlogPostController::class, 'viewPost']);
 
 
 Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');

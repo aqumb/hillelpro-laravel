@@ -53,4 +53,16 @@ class BlogPostController extends Controller
 
         return response()->json(['status' => 'success', 'message' => 'Post updated successfully']);
     }
+
+    public function viewPost($postId) {
+        $post = $this->postRepository->getPostById($postId);
+
+        if (!$post) {
+            return response()->json(['status' => 'error', 'message' => 'Post not found']);
+        }
+
+        $comments = $this->OrmPostRepository->getLatestCommentsForPost($postId, 5);
+
+        return view('posts.blade.php', ['post' => $post, 'comments' => $comments]);
+    }
 }

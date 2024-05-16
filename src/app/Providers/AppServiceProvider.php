@@ -30,6 +30,7 @@ use App\Models\Repository\OrmUrlRepository;
 use App\Models\Interface\UrlRepositoryInterface;
 use App\UrlGenerator\ShortUrlGenerator;
 use App\UrlGenerator\ShortUrlGeneratorInterface;
+use Illuminate\Foundation\Vite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -61,6 +62,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Vite::macro('image', fn (string $asset) => $this->asset("resources/images/{$asset}"));
     }
 }
