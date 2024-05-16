@@ -4,6 +4,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",
-        "laravel/ui": "^4.4"
+        "laravel/ui": "^4.4",
+        "mongodb/laravel-mongodb": "4.1"
     }
 }

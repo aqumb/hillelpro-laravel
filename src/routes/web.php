@@ -40,9 +40,9 @@ Route::get('/blog/{categoryId}', [BlogCategoryController::class, 'getCategories'
 Route::get('/blog/{categoryId}/{postId}', [BlogPostController::class, 'getPosts']);
 
 
-//Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
-//Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten');
-//Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
+Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
+Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten');
+Route::get('/{shortUrl}', [UrlController::class, 'redirectToOriginalUrl'])->name('redirectToOriginalUrl');
 
 //Route::get('/', [UrlController::class, 'allUrl'])->name('allUrl');
 //Route::get('/shorten', [UrlController::class, 'shortenUrl'])->name('shorten')->middleware('web', 'App\Http\Middleware\ValidateUrl');
